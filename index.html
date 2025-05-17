@@ -4,435 +4,172 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invert PDF Colors</title>
-
-    <!-- PDF.js Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.min.js"></script>
-    <!-- jsPDF Library for PDF generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
-
     <style>
-        /* Root Theme Variables */
         :root {
             --bg-color: #181818;
             --container-bg: #222;
             --text-color: #fff;
             --button-bg: #00c853;
             --button-hover: #009624;
-            --canvas-border: #555;
-            --box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
         }
-
-        /* Light Mode Variables */
         .light-mode {
             --bg-color: #f5f5f5;
             --container-bg: #ffffff;
             --text-color: #333;
             --button-bg: #007BFF;
             --button-hover: #0056b3;
-            --canvas-border: #ddd;
-            --box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
         }
-
-        /* General Styles */
         body {
             font-family: Arial, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            text-align: center;
             padding: 20px;
-            transition: background 0.3s, color 0.3s;
-            margin-bottom: 60px; /* Space for footer */
+            margin-bottom: 60px;
         }
-
-        /* Theme Toggle Icon */
-        .theme-toggle {
-            position: absolute;
-            top: 25px;
-            right: 30px;
-            font-size: 24px;
-            cursor: pointer;
-            transition: transform 0.3s;
-            background: none;
-            border: none;
-            color: var(--text-color);
-        }
-
-        .theme-toggle:hover {
-            transform: rotate(15deg);
-        }
-
-        /* Container Styling */
         .container {
             max-width: 850px;
             margin: auto;
             background: var(--container-bg);
             padding: 20px;
             border-radius: 12px;
-            box-shadow: var(--box-shadow);
-            transition: background 0.3s, box-shadow 0.3s;
         }
-
-        /* Title */
-        h1 {
-            font-size: 24px;
-            color: var(--button-bg);
-            margin-bottom: 20px;
-        }
-
-        /* Button Styles */
-        .btn {
-            background: var(--button-bg);
-            color: #fff;
-            padding: 12px 20px;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            transition: 0.3s;
-            margin: 0 10px;
-        }
-
-        .btn:hover {
-            background: var(--button-hover);
-        }
-
-        .btn:disabled {
-            background: #cccccc;
-            cursor: not-allowed;
-        }
-
-        /* Button Container */
-        .button-container {
-            margin: 20px 0;
-        }
-
-        /* File Input */
-        input[type="file"] {
-            display: none;
-        }
-
-        .file-input-label {
-            background: var(--button-bg);
-            color: #fff;
-            padding: 12px 20px;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            transition: 0.3s;
-            display: inline-block;
-        }
-
-        .file-input-label:hover {
-            background: var(--button-hover);
-        }
-
-        /* PDF Display Area */
         #pdfContainer {
             width: 100%;
             height: 500px;
             overflow: auto;
-            background: var(--container-bg);
-            padding: 10px;
-            border-radius: 10px;
-            box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.4);
             margin-top: 15px;
         }
-
-        /* Canvas Styling */
         canvas {
             display: block;
             margin: 10px auto;
-            border-radius: 8px;
-            border: 2px solid var(--canvas-border);
-            box-shadow: 0px 2px 10px rgba(255, 255, 255, 0.1);
-            transition: border 0.3s;
+            border: 1px solid #555;
         }
-
-        /* Footer Styling */
-        .footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: var(--container-bg);
-            padding: 10px 0;
-            box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.3);
-            text-align: center;
+        .btn {
+            background: var(--button-bg);
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
         }
-
-        .footer a {
-            text-decoration: none;
-            color: var(--text-color);
-            font-size: 14px;
-            padding: 10px 20px;
-            transition: color 0.3s;
-        }
-
-        .footer a:hover {
-            color: var(--button-bg);
-        }
-
-        .footer img {
-            height: 24px;
-            vertical-align: middle;
-        }
-
-        /* Loading Indicator */
-        .loading {
-            display: none;
-            margin: 20px 0;
+        #fileUploadStatus {
+            margin: 10px 0;
             color: var(--button-bg);
         }
     </style>
 </head>
 <body>
-    <!-- Theme Toggle Icon -->
-    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark/light mode">
-        <span id="theme-icon">🌙</span>
-    </button>
-
-    <!-- Main Content -->
     <div class="container">
-        <h1>Invert PDF Colors</h1>
+        <h1>PDF Color Inverter</h1>
+        <input type="file" id="pdfInput" accept="application/pdf" style="display:none;">
+        <button onclick="document.getElementById('pdfInput').click()" class="btn">Upload PDF</button>
         
-        <!-- File Input -->
-        <label for="pdfInput" class="file-input-label">Choose PDF File</label>
-        <input type="file" id="pdfInput" accept="application/pdf">
+        <div id="fileUploadStatus"></div>
         
-        <!-- Button Container -->
-        <div class="button-container">
-            <button id="readBtn" class="btn" disabled>Read Inverted PDF</button>
-            <button id="invertBtn" class="btn" disabled>Download Inverted PDF</button>
+        <div id="actionButtons" style="display:none;">
+            <button id="readBtn" class="btn">View Inverted PDF</button>
+            <button id="downloadBtn" class="btn">Download Original PDF</button>
         </div>
         
-        <!-- Loading Indicator -->
-        <div id="loading" class="loading">Processing PDF, please wait...</div>
-        
-        <!-- PDF Display Area -->
         <div id="pdfContainer"></div>
     </div>
 
-    <!-- Footer -->
-    <div class="footer">
-        <a href="https://github.com/from-tanim" target="_blank">
-            <img src="https://raw.githubusercontent.com/from-tanim/invert-read/refs/heads/Main/Assets/git-icon.png" alt="GitHub">
-        </a>
-    </div>
-
     <script>
-        // Initialize jsPDF
         const { jsPDF } = window.jspdf;
-        
-        // Ensure PDF.js Worker is Loaded
         pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.worker.min.js";
-
-        // Global variables
+        
         let pdfDoc = null;
         const copyrightImageUrl = 'https://raw.githubusercontent.com/from-tanim/invert-read/refs/heads/Main/Assets/copy%CA%A4.png'; 
-
-        // DOM elements
-        const pdfInput = document.getElementById("pdfInput");
-        const readBtn = document.getElementById("readBtn");
-        const invertBtn = document.getElementById("invertBtn");
-        const pdfContainer = document.getElementById("pdfContainer");
-        const loadingIndicator = document.getElementById("loading");
-
-        // Event Listeners
-        pdfInput.addEventListener("change", handleFileSelect);
-        readBtn.addEventListener("click", readInvertedPDF);
-        invertBtn.addEventListener("click", invertAndDownloadPDF);
-
-        // Handle file selection
-        function handleFileSelect(event) {
-            const file = event.target.files[0];
-            if (file) {
-                readBtn.disabled = false;
-                invertBtn.disabled = false;
-            }
-        }
-
-        // Read INVERTED PDF function (for online viewing)
-        async function readInvertedPDF() {
-            const file = pdfInput.files[0];
+        document.getElementById('pdfInput').addEventListener('change', async function(e) {
+            const file = e.target.files[0];
             if (!file) return;
-
-            loadingIndicator.style.display = 'block';
-            pdfContainer.innerHTML = "";
-
+            
+            document.getElementById('fileUploadStatus').textContent = "Uploading PDF...";
+            
             try {
                 const arrayBuffer = await file.arrayBuffer();
                 const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
                 pdfDoc = await loadingTask.promise;
                 
-                for (let i = 1; i <= pdfDoc.numPages; i++) {
-                    const page = await pdfDoc.getPage(i);
-                    const canvas = document.createElement("canvas");
-                    pdfContainer.appendChild(canvas);
-                    await renderPage(page, canvas, true); // Render WITH inversion
-                }
+                document.getElementById('fileUploadStatus').textContent = "PDF uploaded successfully!";
+                document.getElementById('actionButtons').style.display = 'block';
             } catch (error) {
-                console.error("Error reading PDF:", error);
-                alert("Error reading PDF. Please try another file.");
-            } finally {
-                loadingIndicator.style.display = 'none';
+                document.getElementById('fileUploadStatus').textContent = "Error uploading PDF";
+                console.error(error);
             }
-        }
+        });
 
-        // Invert and Download PDF function
-        async function invertAndDownloadPDF() {
-            const file = pdfInput.files[0];
-            if (!file) return;
-
-            loadingIndicator.style.display = 'block';
-
-            try {
-                const arrayBuffer = await file.arrayBuffer();
-                const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
-                pdfDoc = await loadingTask.promise;
+        document.getElementById('readBtn').addEventListener('click', async function() {
+            if (!pdfDoc) return;
+            
+            const container = document.getElementById('pdfContainer');
+            container.innerHTML = "";
+            
+            for (let i = 1; i <= pdfDoc.numPages; i++) {
+                const page = await pdfDoc.getPage(i);
+                const canvas = document.createElement('canvas');
+                container.appendChild(canvas);
                 
-                const pdf = new jsPDF();
-                let invertedCanvases = [];
+                const viewport = page.getViewport({ scale: 1.5 });
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
                 
-                // Create inverted canvases
-                for (let i = 1; i <= pdfDoc.numPages; i++) {
-                    const page = await pdfDoc.getPage(i);
-                    const canvas = document.createElement("canvas");
-                    await renderPage(page, canvas, true); // Render with inversion
-                    invertedCanvases.push(canvas);
-                }
-
-                // Add each inverted page to the PDF
-                for (let i = 0; i < invertedCanvases.length; i++) {
-                    const canvas = invertedCanvases[i];
-                    if (i > 0) pdf.addPage();
-                    
-                    const imgData = canvas.toDataURL('image/jpeg', 0.8);
-                    const pageWidth = pdf.internal.pageSize.getWidth();
-                    const pageHeight = pdf.internal.pageSize.getHeight();
-                    
-                    // Calculate dimensions to maintain aspect ratio
-                    const ratio = canvas.width / canvas.height;
-                    let width = pageWidth - 20;
-                    let height = width / ratio;
-                    
-                    if (height > pageHeight - 20) {
-                        height = pageHeight - 20;
-                        width = height * ratio;
-                    }
-                    
-                    // Center the image on the page
-                    const x = (pageWidth - width) / 2;
-                    const y = (pageHeight - height) / 2;
-                    
-                    pdf.addImage(imgData, 'JPEG', x, y, width, height);
-                }
+                await page.render({
+                    canvasContext: canvas.getContext('2d'),
+                    viewport: viewport
+                }).promise;
                 
-                // Add copyright page
-                pdf.addPage();
-                
-                try {
-                    // Add copyright 
-                    const imgWidth = 50;
-                    const imgHeight = 50;
-                    const pageWidth = pdf.internal.pageSize.getWidth();
-                    const pageHeight = pdf.internal.pageSize.getHeight();
-                    
-                    const x = (pageWidth - imgWidth) / 2;
-                    const y = (pageHeight - imgHeight) / 2;
-                    
-                    // Load copyright image
-                    const img = await loadImage(copyrightImageUrl);
-                    pdf.addImage(img, 'JPEG', x, y, imgWidth, imgHeight);
-                    
-                    // Add copyright text
-                    pdf.setFontSize(12);
-                    pdf.text("Copyright © From-Tanim", pageWidth / 2, y + imgHeight + 20, { align: 'center' });
-                } catch (error) {
-                    console.error("Error adding copyright:", error);
-                    // If image fails to load, just add text
-                    pdf.setFontSize(12);
-                    pdf.text("Copyright © From-Tanim", 105, 140, { align: 'center' });
-                }
-                
-                // Download the PDF
-                pdf.save('inverted_pdf_with_copyright.pdf');
-            } catch (error) {
-                console.error("Error inverting PDF:", error);
-                alert("Error processing PDF. Please try again.");
-            } finally {
-                loadingIndicator.style.display = 'none';
-            }
-        }
-
-        // Render PDF page to canvas
-        async function renderPage(page, canvas, invert) {
-            const viewport = page.getViewport({ scale: 1.5 });
-            const context = canvas.getContext("2d");
-            canvas.width = viewport.width;
-            canvas.height = viewport.height;
-
-            const renderContext = { canvasContext: context, viewport: viewport };
-            await page.render(renderContext).promise;
-
-            if (invert) {
                 invertColors(canvas);
             }
-        }
+        });
 
-        // Invert canvas colors
+        document.getElementById('downloadBtn').addEventListener('click', async function() {
+            if (!pdfDoc) return;
+            
+            const pdf = new jsPDF();
+            
+            for (let i = 1; i <= pdfDoc.numPages; i++) {
+                const page = await pdfDoc.getPage(i);
+                const canvas = document.createElement('canvas');
+                const viewport = page.getViewport({ scale: 1.0 });
+                
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+                
+                await page.render({
+                    canvasContext: canvas.getContext('2d'),
+                    viewport: viewport
+                }).promise;
+                
+                if (i > 1) pdf.addPage();
+                
+                const imgData = canvas.toDataURL('image/jpeg');
+                pdf.addImage(imgData, 'JPEG', 10, 10, 190, 0);
+            }
+            
+            // Add copyright page
+            pdf.addPage();
+            pdf.text("Copyright © From-Tanim", 105, 140, { align: 'center' });
+            
+            pdf.save('original_with_copyright.pdf');
+        });
+
         function invertColors(canvas) {
-            const ctx = canvas.getContext("2d");
+            const ctx = canvas.getContext('2d');
             const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
             const data = imageData.data;
             
             for (let i = 0; i < data.length; i += 4) {
-                data[i] = 255 - data[i];     // Red
-                data[i + 1] = 255 - data[i + 1]; // Green
-                data[i + 2] = 255 - data[i + 2]; // Blue
+                data[i] = 255 - data[i];
+                data[i + 1] = 255 - data[i + 1];
+                data[i + 2] = 255 - data[i + 2];
             }
             
             ctx.putImageData(imageData, 0, 0);
         }
-
-        // Helper function to load image
-        function loadImage(url) {
-            return new Promise((resolve, reject) => {
-                const img = new Image();
-                img.crossOrigin = "Anonymous";
-                img.onload = () => resolve(img);
-                img.onerror = reject;
-                img.src = url;
-            });
-        }
-
-        // Theme Toggle Function
-        function toggleTheme() {
-            const toggleIcon = document.getElementById("theme-icon");
-            document.body.classList.toggle("light-mode");
-
-            if (document.body.classList.contains("light-mode")) {
-                localStorage.setItem("theme", "light");
-                toggleIcon.textContent = "☀️";
-            } else {
-                localStorage.setItem("theme", "dark");
-                toggleIcon.textContent = "🌙";
-            }
-        }
-
-        // Load Theme on Page Load
-        (function() {
-            const savedTheme = localStorage.getItem("theme");
-            const toggleIcon = document.getElementById("theme-icon");
-
-            if (savedTheme === "light") {
-                document.body.classList.add("light-mode");
-                toggleIcon.textContent = "☀️";
-            } else {
-                toggleIcon.textContent = "🌙";
-            }
-        })();
     </script>
 </body>
 </html>
