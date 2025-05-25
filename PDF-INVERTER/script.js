@@ -89,8 +89,8 @@ function handleDrop(e) {
 }
 
 async function processPDFFile(file) {
-    if (file.size > 10 * 1024 * 1024) {
-        showStatus('File too large (max 10MB)', 'error');
+    if (file.size > 100 * 1024 * 1024) {
+        showStatus('File too large (max 100MB)', 'error');
         return;
     }
 
