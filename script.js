@@ -9,7 +9,8 @@ const elements = {
     fileUploadStatus: document.getElementById('fileUploadStatus'),
     actionButtons: document.getElementById('actionButtons'),
     readBtn: document.getElementById('readBtn'),
-   
+    
+    downloadInvertedBtn: document.getElementById('downloadInvertedBtn'),
     resetBtn: document.getElementById('resetBtn'),
     pdfContainer: document.getElementById('pdfContainer'),
     pdfCanvas: document.getElementById('pdfCanvas'),
@@ -45,7 +46,6 @@ elements.dropZone.addEventListener('dragover', handleDragOver);
 elements.dropZone.addEventListener('dragleave', handleDragLeave);
 elements.dropZone.addEventListener('drop', handleDrop);
 elements.readBtn.addEventListener('click', renderPDF);
-
 elements.downloadInvertedBtn.addEventListener('click', () => downloadPDF('inverted'));
 elements.resetBtn.addEventListener('click', resetApp);
 elements.prevPage.addEventListener('click', () => navigatePage(-1));
