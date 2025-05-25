@@ -315,8 +315,8 @@ async function downloadPDF(type) {
         // Add copyright page
         pdf.addPage();
         pdf.setFontSize(16);
-        pdf.text("PDF processed by PDF Color Inverter", 105, 100, { align: 'center' });
-        pdf.text("Copyright © " + new Date().getFullYear(), 105, 120, { align: 'center' });
+        pdf.text("PDF processed by INVERT&READ&DOWNLOAD", 105, 100, { align: 'center' });
+        pdf.text("Copyright © From-Tanim " + new Date().getFullYear(), 105, 120, { align: 'center' });
         
         const fileName = type === 'inverted' ? 'inverted_pdf.pdf' : 'original_pdf.pdf';
         pdf.save(fileName);
