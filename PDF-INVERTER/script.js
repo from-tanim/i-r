@@ -312,11 +312,11 @@ async function downloadPDF(type) {
             pdf.addImage(imgData, 'JPEG', 10, 10, pdfWidth, pdfHeight);
         }
         
-        // Add copyright page
+         // Add copyright page
         pdf.addPage();
-        pdf.setFontSize(16);
-        pdf.text("PDF processed by INVERT&READ&DOWNLOAD", 105, 100, { align: 'center' });
-        pdf.text("Copyright © From-Tanim " + new Date().getFullYear(), 105, 120, { align: 'center' });
+    pdf.setFontSize(16);
+    pdf.text("PDF processed by INVERT&READ&DOWNLOAD", 105, 100, { align: 'center' });
+    pdf.text(`Copyright From-Tanim © ${new Date().getFullYear()}`, 105, 120, { align: 'center' });
         
         const fileName = type === 'inverted' ? 'inverted_pdf.pdf' : 'original_pdf.pdf';
         pdf.save(fileName);
@@ -329,6 +329,7 @@ async function downloadPDF(type) {
         state.isProcessing = false;
     }
 }
+
 
 function resetApp() {
     state.pdfDoc = null;
