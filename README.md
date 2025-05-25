@@ -1,64 +1,63 @@
-# Invert PDF Colors
+# PDF Inverter (i-r)
 
-1.0.1
-# 🎨 What’s New?
-✅ Light & Dark Mode Toggle
-✅ Remembers User’s Preference (via localStorage)
-✅ More Professional UI
-✅ Smooth Transitions
+A simple, lightweight web tool to invert the colors of PDF files directly in the browser — no installation or sign-in required.
 
-# 💡 How It Works
-Clicking "Toggle Theme" switches between light and dark modes.
-The theme remains saved even after refreshing the page.
-Dark Mode is the default, but users can switch anytime.
-
---------------------------------------------------------------------------------
-
-## 📌 Overview
-This web application allows users to upload and view PDF files with inverted colors, making it easier to read in dark mode. The website utilizes **PDF.js** to render PDF pages onto an HTML5 canvas and then applies a color inversion effect for a night-friendly reading experience.
-
-## ✨ Features
-- 📂 **Upload and View PDFs** – Easily upload PDF files for preview.
-- 🎨 **Dark Mode UI** – Stylish and user-friendly dark-themed interface.
-- 🔄 **Automatic Color Inversion** – Inverts PDF colors for better readability in low-light environments.
-- ⚡ **Fast and Lightweight** – Uses **PDF.js** for smooth performance.
-- 🔧 **Cross-Browser Compatibility** – Works on all modern browsers.
-
-## 🚀 Live Demo
-You can check out the live version of this project here: **[Live Demo Link]** (Add your deployed link here)
-
-## 🛠️ Technologies Used
-- **HTML** – Structuring the webpage
-- **CSS** – Styling the interface with a modern dark theme
-- **JavaScript** – Implementing functionality and handling file uploads
-- **PDF.js** – Rendering PDF pages dynamically
-
-## 📂 Installation & Usage
-1. Clone this repository:
-   ```sh
-   git clone https://github.com/your-username/invert-pdf-colors.git
-   ```
-2. Navigate to the project directory:
-   ```sh
-   cd invert-pdf-colors
-   ```
-3. Open `index.html` in your browser.
-
-## 📸 Screenshots
-([[screenshot.png](https://github.com/from-tanim/INVERTED-READER/blob/main/Main/Screenshot-0.jpeg)]
-## 🏗️ How It Works
-1. The user selects a PDF file using the file input field.
-2. **PDF.js** processes the file and renders each page onto an HTML5 canvas.
-3. A JavaScript function applies a **color inversion effect**, changing black to white and vice versa.
-4. The modified pages are displayed in an interactive and user-friendly way.
-
-## 📜 License
-This project is licensed under the **MIT License**. You are free to modify and use it as needed.
-
-## 📬 Contact
-If you have any suggestions or issues, feel free to reach out:
-- GitHub: https://github.com/from-tanim
-- Email: h.tanim@outlook.com
+🔗 **Live Demo**: [from-tanim.github.io/i-r](https://from-tanim.github.io/i-r/)
 
 ---
-### ⭐ Don't forget to give this project a star if you found it useful!
+
+## 🌟 Features
+
+- Inverts PDF pages to dark mode (white ➜ black, black ➜ white)
+- Fully client-side — your files never leave your device
+- Fast and easy to use
+- Mobile-friendly design
+
+---
+
+## 🚀 How It Works
+
+1. Visit the site: [from-tanim.github.io/i-r](https://from-tanim.github.io/i-r/)
+2. You'll be redirected to the PDF Inverter interface.
+3. Upload your PDF.
+4. It processes the file and provides an inverted version for download.
+
+> The tool uses JavaScript and PDF.js to render and manipulate PDF files in the browser.
+
+---
+
+## 📁 Folder Structure
+
+- `/PDF-INVERTER/` – Main app interface (HTML, CSS, JS)
+- `/index.html` – Redirect page with loader
+- `/favicon.png` – Optional tab icon
+- `/README.md` – This file
+
+---
+
+## 🛠️ Technologies Used
+
+- HTML5
+- CSS3
+- JavaScript (vanilla)
+- [PDF.js](https://mozilla.github.io/pdf.js/) (by Mozilla)
+
+---
+
+## 📌 Notes
+
+- This is a front-end only project.
+- GitHub Pages automatically redirects visitors from `/i-r/` to the tool's main page using a redirect page (`index.html`).
+
+---
+
+## 📄 License
+
+MIT License. Use freely, with credit.
+
+---
+
+## 🙋‍♂️ Author
+
+**Tanim**  
+[GitHub Profile](https://github.com/from-tanim)
