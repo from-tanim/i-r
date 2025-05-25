@@ -1,81 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF Color Inverter</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>PDF Color Inverter</h1>
-            <div class="theme-toggle">
-                <button id="themeBtn" class="btn secondary">Toggle Light/Dark Mode</button>
-            </div>
-        </header>
-
-        <div class="upload-area" id="dropZone">
-            <input type="file" id="pdfInput" accept="application/pdf" class="visually-hidden">
-            <div class="upload-prompt">
-                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="17 8 12 3 7 8"></polyline>
-                    <line x1="12" y1="3" x2="12" y2="15"></line>
-                </svg>
-                <p>Drag & drop your PDF here or</p>
-                <button id="uploadBtn" class="btn primary">Select PDF</button>
-                <p class="file-requirements">(Max size: 10MB)</p>
-            </div>
-        </div>
-
-        <div id="fileUploadStatus" class="status-message"></div>
-
-        <div id="actionButtons" class="action-buttons hidden">
-            <div class="btn-group">
-                <button id="readBtn" class="btn primary">View PDF</button>
-
-
-             
-
-                <button id="downloadInvertedBtn" class="btn primary">Download Inverted</button>
-                <button id="resetBtn" class="btn danger">Reset</button>
-            </div>
-
-
-
-
-            <div class="controls">
-                <label for="brightness">Brightness:</label>
-                <input type="range" id="brightness" min="-100" max="100" value="0">
-                <label for="contrast">Contrast:</label>
-                <input type="range" id="contrast" min="-100" max="100" value="0">
-            </div>
-        </div>
-
-        <div id="pdfContainer" class="pdf-container hidden">
-            <div class="pdf-controls">
-                <button id="prevPage" class="btn secondary" disabled>Previous</button>
-                <span id="pageNum">Page: 1/1</span>
-                <button id="nextPage" class="btn secondary" disabled>Next</button>
-            </div>
-            <div class="canvas-wrapper">
-                <canvas id="pdfCanvas"></canvas>
-            </div>
-            <div class="view-options">
-                <button id="originalView" class="btn secondary">Original View</button>
-                <button id="invertedView" class="btn primary">Inverted View</button>
-            </div>
-        </div>
-
-        <div class="loading hidden" id="loadingIndicator">
-            <div class="spinner"></div>
-            <p>Processing PDF...</p>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-</body>
+<html>
+  <head>
+    <meta http-equiv="refresh" content="0; URL='my_home.html'" />
+  </head>
+  <body>
+    <p>Redirecting to <a href="my_home.html">my_home.html</a>...</p>
+  </body>
 </html>
